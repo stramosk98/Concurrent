@@ -11,7 +11,7 @@ public class Boiler {
 
 	public synchronized void turnOn() {
 		if (isOn) {
-			System.out.println("A caldeira já esta ligada");
+			System.out.println("A caldeira jÃ¡ esta ligada");
 			return;
 		}
 		
@@ -22,7 +22,7 @@ public class Boiler {
 	
 	public synchronized void turnOff() {
 		if (!isOn) {
-			System.out.println("A caldeira já esta desligada");
+			System.out.println("A caldeira jÃ¡ esta desligada");
 			return;
 		}
 		
@@ -32,7 +32,7 @@ public class Boiler {
 	
 	public synchronized void clean() {
 		if (isOn) {
-            System.out.println("Não é possível limpar enquanto a caldeira está ligada!");
+            System.out.println("NÃ£o Ã© possÃ­vel limpar enquanto a caldeira estÃ¡ ligada!");
             return;
         }
 
@@ -50,18 +50,18 @@ public class Boiler {
 	}
 	
 	private synchronized void updateTemperature() {
-        temperature += random.nextInt(200);
-        System.out.println("Temperatura atual: " + temperature + "°C");
-
-        if (temperature > MAX_TEMPERATURE) {
-            System.out.println("Temperatura CRÍTICA! Desligando a caldeira...");
-            turnOff();
+		temperature += random.nextInt(200);
+		System.out.println("Temperatura atual: " + temperature + "Â°C");
+	
+		if (temperature > MAX_TEMPERATURE) {
+		    System.out.println("Temperatura CRÃTICA! Desligando a caldeira...");
+		    turnOff();
+		}
         }
-    }
-
-    public boolean isOn() {
-        return isOn;
-    }
+	
+	public boolean isOn() {
+		return isOn;
+	}
 
 	public int getTemperature() {
 		return temperature;
