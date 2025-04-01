@@ -11,7 +11,7 @@ public class Main {
         CarroThread[] threads = new CarroThread[numCarros];
 
         for (int i = 0; i < numCarros; i++) {
-            Carro carro = new Carro("Carro" + (i+1));
+            Carro carro = new Carro("#" + (i+1));
             threads[i] = new CarroThread(carro, resultados);
         }
 

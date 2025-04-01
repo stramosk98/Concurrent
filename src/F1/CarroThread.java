@@ -15,38 +15,36 @@ public class CarroThread extends Thread {
 
     @Override
     public void run() {
-    	boolean jaParou = false;
         try {
-            while (true) {
-                if (carro.isFinished()) {
-                    System.out.println(carro.getNome() + " terminou a corrida!");
-                    synchronized(resultados) {
-                        resultados.add(carro.getNome());
-                    }
-                    break;
-                }
+            while (!carro.finalizou()) {
+                int action = random.nextInt(100);
                 
-            	int acao = random.nextInt(8);
-                
-                if (acao <= 4) {
+                if (action < 60) {
                     carro.correr();
-                } else if (acao == 5) {
-                    carro.passarBox();
-                } else if (acao == 6) {
-                    carro.safetyCar();
-                } else if (acao == 7 && !jaParou) {
+                } else if (action < 80) {
+                    carro.frear();
+                } else if (action < 95) {
+                    carro.pitStop();
+                } else {
                     carro.parar();
-                    synchronized(resultados) {
-                        resultados.add(carro.getNome() + " (Problema Técnico)");
-                    }
-                    jaParou = true;
-                    return; // Encerra a thread pois o carro saiu da corrida
                 }
                 
-                Thread.sleep(1000);
+                carro.mover();
+                
+                System.out.println(carro.drawCar());
+                System.out.println("-".repeat(30));
+                
+                Thread.sleep(500);
             }
+            
+            if (carro.getDistance() >= 100) {
+                synchronized(resultados) {
+                    resultados.add(carro.getNome());
+                }
+            }
+            
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            System.out.println(carro.getNome() + " thread interrompida");
         }
     }
 }
