@@ -51,11 +51,11 @@ public class SearchFile extends Thread{
 			Path filePath = Paths.get(FILES_DIR, fileName).toAbsolutePath();
 			BufferedReader reader = new BufferedReader(new FileReader(filePath.toFile()));
 			String line;
-			int cont = 0;
+			int count = 0;
 			while ((line = reader.readLine()) != null) {
-				cont++;
+				count++;
 				if (line.toLowerCase().contains(search.toLowerCase())) {
-					System.out.println(fileName + " - line: " + cont + " - " + line);
+					System.out.println(fileName + " - line: " + count + " - " + line);
 				}
 			}
 		} catch (InterruptedException e) {
