@@ -72,12 +72,15 @@ public class SearchDNA extends Thread{
 					default: invalid = true;
 					}
 				}
+				
 				if (invalid) {
 					invalids.add(count);
-				} else {
-					writer.println(newLine);
+					newLine.insert(0, "***FITA INVALIDA - ");
 				}
+				
+				writer.println(newLine);
 			}
+			
 			reader.close();
 			writer.close();
 			
