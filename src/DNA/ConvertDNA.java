@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Semaphore;
 
-public class SearchDNA extends Thread{
+public class ConvertDNA extends Thread{
 	
 	private List<String> fileNames;
 	private List<String> fileNamesSearch;
@@ -19,11 +19,11 @@ public class SearchDNA extends Thread{
 	
 	private static final Semaphore sem = new Semaphore(2);
 	
-	public SearchDNA(List<String> filesName) {
+	public ConvertDNA(List<String> filesName) {
 		this.fileNames = filesName;
 	}
 	
-	public void find() {
+	public void execute() {
 		this.fileNamesSearch = fileNames;
 		List<Thread> threads = new ArrayList<>();
 		for (int i = 0; i < this.fileNames.size(); i++) {

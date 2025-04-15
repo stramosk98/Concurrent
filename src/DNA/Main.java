@@ -12,8 +12,8 @@ public class Main {
 			fileNames.add("dna-" + i + ".txt");
 		}
 
-		SearchDNA search = new SearchDNA(fileNames);
-		search.find();
+		ConvertDNA convert = new ConvertDNA(fileNames);
+		convert.execute();
 	}
 
 }
