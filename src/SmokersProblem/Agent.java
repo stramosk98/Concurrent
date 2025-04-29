@@ -1,5 +1,7 @@
 package SmokersProblem;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Semaphore;
 
@@ -7,23 +9,28 @@ public class Agent implements Runnable {
 
     private Semaphore agent, tobacco, match, paper;
     private Random random;
+    private Counter counter;
 
-    public Agent(Semaphore agent, Semaphore tobacco, Semaphore paper, Semaphore match) {
+    public Agent(Semaphore agent, Semaphore tobacco, Semaphore paper, Semaphore match, Counter counter) {
         this.agent = agent;
         this.tobacco = tobacco;
         this.paper = paper;
         this.match = match;
+        this.counter = counter;
         this.random = new Random();
     }
 
     @Override
     public void run() {
         try {
-            while (true) {
+            while (counter.haveSmokersAlive()) {
                 agent.acquire();
-
-                int escolha = random.nextInt(3);
-                switch (escolha) {
+                System.out.println();
+                
+                List<Integer> choices = getAvailableChoices();
+                if (choices.isEmpty()) break;
+                int choice = choices.get(random.nextInt(choices.size()));
+                switch (choice) {
                     case 0:
                         System.out.println("Agente colocou papel e fósforo");
                         tobacco.release();
@@ -40,6 +47,9 @@ public class Agent implements Runnable {
 
                 Thread.sleep(1000);
             }
+
+            System.out.println("\nTodos os fumantes morreram. Agente encerrando.");
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -48,4 +58,13 @@ public class Agent implements Runnable {
     public void release() {
         agent.release();
     }
+    
+    private List<Integer> getAvailableChoices() {
+        List<Integer> choices = new ArrayList<>();
+        if (counter.isAlive("Fumante com tabaco")) choices.add(0);
+        if (counter.isAlive("Fumante com fósforo")) choices.add(1);
+        if (counter.isAlive("Fumante com papel")) choices.add(2);
+        return choices;
+    }
+
 }
